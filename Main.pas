@@ -271,12 +271,10 @@ begin
   if not SelectDirectory('ВЫБЕРИТЕ ПАПКУ С MINES.EXE', '',
     GLOBAL_FILES_MINES_CLIENT) then
     Exit;
-  ShowMessage(GLOBAL_FILES_MINES_CLIENT);
   if GLOBAL_FILES_MINES_CLIENT <> '' then
   begin
     GLOBAL_FILES_MINES_CLIENT := GLOBAL_FILES_MINES_CLIENT + '\' +
       GLOBAL_FILES_CLIENT_NAME;
-    ShowMessage(GLOBAL_FILES_MINES_CLIENT);
     if FileExists(GLOBAL_FILES_MINES_CLIENT) then
     begin
       ShowMessage('Найден клиент игры. Сохранено!');
@@ -296,15 +294,18 @@ var
 begin
   GetCursorPos(foo);
   foo := stbar_main.ScreenToClient(foo);
-//  ShowMessage( IntToStr(foo.X) + ' : ' + IntToStr( foo.Y ) );
+  // ShowMessage( IntToStr(foo.X) + ' : ' + IntToStr( foo.Y ) );
   if foo.X <= 200 then
   begin
     // link developer
-    ShellExecute(handle, 'open', 'https://vk.com/oncologist63', nil, nil, SW_SHOW);
-  end else
+    ShellExecute(Handle, 'open', 'https://vk.com/oncologist63', nil,
+      nil, SW_SHOW);
+  end
+  else
   begin
     // link github
-    ShellExecute(handle, 'open', 'https://github.com/VolodinAS/account-switcher-2.0', nil, nil, SW_SHOW);
+    ShellExecute(Handle, 'open',
+      'https://github.com/VolodinAS/account-switcher-2.0', nil, nil, SW_SHOW);
   end;
 end;
 
@@ -327,9 +328,16 @@ begin
       end
       else
       begin
-        // запускаем игру
-        ShellExecute(Handle, 'open', PChar(GLOBAL_FILES_MINES_CLIENT), nil, nil,
-          SW_SHOWMAXIMIZED);
+        if FileExists(GLOBAL_FILES_MINES_CLIENT) then
+        begin
+          ShellExecute(Handle, 'open', PChar(GLOBAL_FILES_MINES_CLIENT), nil,
+            nil, SW_SHOWMAXIMIZED);
+        end else
+        begin
+          ShowMessage('Сначала выберите папку с клиентом');
+          SettingsClientPath;
+        end;
+
       end;
 
     end
