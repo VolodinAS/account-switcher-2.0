@@ -11,6 +11,7 @@
 * Ссылка на Яндекс.Диск: [Account Switcher 2.0](https://disk.yandex.ru/d/ocAP9yh-zBCvgQ).
 * По этой ссылке вы найдете для Win64 и Win32.
 * По работе приложения можете спрашивать в ВКонтакте.
+* Если считаете, что на Яндекс.Диске выложено одно, а на гитхабе совершенно иное, можете качать клиент в папках по ссылкам сверху: **[Win32](https://github.com/VolodinAS/account-switcher-2.0/tree/master/Win32/Release)**, **[Win64](https://github.com/VolodinAS/account-switcher-2.0/tree/master/Win64/Release)**
 
 ## Преимущества Account Switcher 2.0
 * Не нужно подтверждать изменение реестра при попытке захода на новый аккаунт
