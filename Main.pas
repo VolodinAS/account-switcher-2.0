@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Registry, Vcl.StdCtrls, ShellApi, Vcl.ExtCtrls, FileCtrl, IniFiles,
-  Vcl.ComCtrls;
+  Vcl.ComCtrls, TlHelp32;
 
 type
   Tfrm = class(TForm)
@@ -20,6 +20,7 @@ type
     btn_settings: TButton;
     btn_quit: TButton;
     stbar_main: TStatusBar;
+    btn_updateRegistry: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btn_addAccountClick(Sender: TObject);
     procedure btn_updateClick(Sender: TObject);
@@ -31,6 +32,7 @@ type
     procedure btn_launchClick(Sender: TObject);
     procedure listbox_accountListDblClick(Sender: TObject);
     procedure stbar_mainClick(Sender: TObject);
+    procedure btn_updateRegistryClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,6 +40,7 @@ type
     procedure UpdateList;
     procedure SettingsClientPath;
     procedure LaunchGame;
+    function CopyDir(const fromDir, toDir: string): Boolean;
   end;
 
 var
@@ -47,6 +50,7 @@ var
   GLOBAL_DIRECTORIES_CONFIG: string; // папка с конфигом
   GLOBAL_FILES_CONFIG: string; // файл с конфигом
   GLOBAL_FILES_CLIENT_NAME: string;
+  GLOBAL_FILES_DATA_NAME: string;
   GLOBAL_REGISTRY_PATH_MINES: string; // путь реестра
   GLOBAL_FILES_MINES_CLIENT: string; // путь до клиента игры
 
@@ -58,6 +62,9 @@ var
 implementation
 
 {$R *.dfm}
+
+uses
+  StringAndHWND;
 
 procedure Tfrm.btn_addAccountClick(Sender: TObject);
 var
@@ -164,6 +171,53 @@ begin
   UpdateList;
 end;
 
+procedure Tfrm.btn_updateRegistryClick(Sender: TObject);
+var
+  Reg: TRegistry;
+  RegistryItems: TStringList;
+  accountData: string;
+  FileName, Key: string;
+  currentAccount: Integer;
+begin
+  Reg := TRegistry.Create;
+  RegistryItems := TStringList.Create;
+
+  Reg.RootKey := HKEY_CURRENT_USER;
+  Reg.OpenKey(GLOBAL_REGISTRY_PATH_MINES, false);
+  Reg.GetValueNames(RegistryItems);
+
+  if RegistryItems.Count > 0 then
+  begin
+
+    if listbox_accountList.ItemIndex >= 0 then
+    begin
+      currentAccount := listbox_accountList.ItemIndex;
+      accountData := listbox_accountList.Items[currentAccount];
+      FileName := GLOBAL_DIRECTORIES_REGISTRIES + '\' + accountData + '.reg';
+      Key := 'HKEY_CURRENT_USER' + GLOBAL_REGISTRY_PATH_MINES;
+      if ShellExecute(Handle, 'open', 'regedit.exe',
+        PChar(Format('/e "%s" "%s"', [FileName, Key])), '', SW_SHOWDEFAULT) <= 32
+      then // если ошибка, то возвращаемый код <=32
+      begin
+        RaiseLastWin32Error();
+      end
+      else
+      begin
+        ShowMessage('Аккаунт успешно обновлён!');
+        UpdateList;
+      end;
+    end
+    else
+    begin
+      ShowMessage('Сначала выберите аккаунт из списка для обновления!');
+    end;
+  end
+  else
+  begin
+    ShowMessage('Вы еще не авторизовались. Сначала авторизуйтесь хотя бы раз!');
+  end;
+end;
+
 procedure Tfrm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   IniFile.Free;
@@ -178,6 +232,7 @@ begin
   GLOBAL_FILES_CONFIG := GLOBAL_DIRECTORIES_CONFIG + '\settings.ini';
   GLOBAL_REGISTRY_PATH_MINES := '\Software\MyachinInc\Mines3';
   GLOBAL_FILES_MINES_CLIENT := '';
+  GLOBAL_FILES_DATA_NAME := '';
   GLOBAL_INI_CLIENT_SECTION := 'MinesClient';
   GLOBAL_INI_CLIENT_PARAMETER := 'Path';
   GLOBAL_FILES_CLIENT_NAME := 'Mines3.exe';
@@ -223,11 +278,13 @@ begin
   begin
     btn_removeAccount.Enabled := true;
     btn_launch.Enabled := true;
+    btn_updateRegistry.Enabled := true;
   end
   else
   begin
     btn_removeAccount.Enabled := false;
     btn_launch.Enabled := false;
+    btn_updateRegistry.Enabled := false;
   end;
 
 end;
@@ -311,7 +368,8 @@ end;
 
 procedure Tfrm.LaunchGame;
 var
-  FileName, accountData: string;
+  FileName, accountData, GamePath, GameClient, GameData, GameTwinks,
+    GameTwinksClient, GameTwinksData: string;
 begin
   if listbox_accountList.ItemIndex >= 0 then
   begin
@@ -319,7 +377,6 @@ begin
     FileName := GLOBAL_DIRECTORIES_REGISTRIES + '\' + accountData + '.reg';
     if FileExists(FileName) then
     begin
-
       if ShellExecute(Handle, 'open', 'regedit.exe',
         PChar(Format(' /s "%s"', [FileName])), '', SW_SHOWDEFAULT) <= 32 then
       // если ошибка, то возвращаемый код <=32
@@ -330,9 +387,31 @@ begin
       begin
         if FileExists(GLOBAL_FILES_MINES_CLIENT) then
         begin
+          { GamePath := ExtractFilePath(GLOBAL_FILES_MINES_CLIENT);
+            GameClient := GLOBAL_FILES_MINES_CLIENT;
+            GameData := GamePath + 'Mines3_Data';
+
+            if DirectoryExists(GameData) then
+            begin
+            GameClient := GamePath + '\' + accountData + '.exe';
+            if CopyFile(PChar(GLOBAL_FILES_MINES_CLIENT), PChar(GameClient),
+            false) then
+            begin
+            GameTwinksData := GamePath + '\' + accountData + '_Data';
+            if CopyDir(PChar(GameData), PChar(GameTwinksData)) then
+            begin
+            // ShowMessage('123123');
+            ShellExecute(Handle, 'open', PChar(GameClient),
+            nil, nil, SW_SHOWMAXIMIZED);
+            end;
+
+            end;
+            end; }
+
           ShellExecute(Handle, 'open', PChar(GLOBAL_FILES_MINES_CLIENT), nil,
             nil, SW_SHOWMAXIMIZED);
-        end else
+        end
+        else
         begin
           ShowMessage('Сначала выберите папку с клиентом');
           SettingsClientPath;
@@ -351,6 +430,22 @@ begin
     ShowMessage('Не выбран аккаунт для запуска');
   end;
 
+end;
+
+// Функция копирования каталога
+function Tfrm.CopyDir(const fromDir, toDir: string): Boolean;
+var
+  fos: TSHFileOpStruct;
+begin
+  ZeroMemory(@fos, SizeOf(fos));
+  with fos do
+  begin
+    wFunc := FO_COPY;
+    fFlags := FOF_SILENT or FOF_NOCONFIRMATION;
+    pFrom := PChar(fromDir + #0);
+    pTo := PChar(toDir)
+  end;
+  Result := (0 = ShFileOperation(fos));
 end;
 
 end.

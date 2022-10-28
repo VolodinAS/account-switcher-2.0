@@ -4,7 +4,7 @@ object frm: Tfrm
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Account Switcher 2.0'
-  ClientHeight = 601
+  ClientHeight = 650
   ClientWidth = 384
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -187,7 +187,7 @@ object frm: Tfrm
   end
   object btn_launch: TButton
     Left = 0
-    Top = 435
+    Top = 484
     Width = 384
     Height = 49
     Align = alBottom
@@ -202,6 +202,7 @@ object frm: Tfrm
     TabOrder = 2
     TabStop = False
     OnClick = btn_launchClick
+    ExplicitTop = 435
   end
   object listbox_accountList: TListBox
     Left = 0
@@ -252,7 +253,7 @@ object frm: Tfrm
   end
   object btn_settings: TButton
     Left = 0
-    Top = 484
+    Top = 533
     Width = 384
     Height = 49
     Align = alBottom
@@ -266,10 +267,11 @@ object frm: Tfrm
     TabOrder = 5
     TabStop = False
     OnClick = btn_settingsClick
+    ExplicitTop = 484
   end
   object btn_quit: TButton
     Left = 0
-    Top = 533
+    Top = 582
     Width = 384
     Height = 49
     Align = alBottom
@@ -283,10 +285,11 @@ object frm: Tfrm
     TabOrder = 6
     TabStop = False
     OnClick = btn_quitClick
+    ExplicitTop = 533
   end
   object stbar_main: TStatusBar
     Left = 0
-    Top = 582
+    Top = 631
     Width = 384
     Height = 19
     Panels = <
@@ -302,6 +305,26 @@ object frm: Tfrm
         Width = 50
       end>
     OnClick = stbar_mainClick
+    ExplicitTop = 582
+  end
+  object btn_updateRegistry: TButton
+    Left = 0
+    Top = 435
+    Width = 384
+    Height = 49
+    Align = alBottom
+    Caption = #1054#1041#1053#1054#1042#1048#1058#1068' '#1056#1045#1045#1057#1058#1056
+    Enabled = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 8
+    TabStop = False
+    OnClick = btn_updateRegistryClick
+    ExplicitTop = 443
   end
   object tmr_focusListChecker: TTimer
     Interval = 100
