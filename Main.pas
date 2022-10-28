@@ -21,6 +21,7 @@ type
     btn_quit: TButton;
     stbar_main: TStatusBar;
     btn_updateRegistry: TButton;
+    btn_launchClient: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btn_addAccountClick(Sender: TObject);
     procedure btn_updateClick(Sender: TObject);
@@ -33,6 +34,7 @@ type
     procedure listbox_accountListDblClick(Sender: TObject);
     procedure stbar_mainClick(Sender: TObject);
     procedure btn_updateRegistryClick(Sender: TObject);
+    procedure btn_launchClientClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -116,6 +118,41 @@ end;
 procedure Tfrm.btn_launchClick(Sender: TObject);
 begin
   LaunchGame;
+end;
+
+procedure Tfrm.btn_launchClientClick(Sender: TObject);
+begin
+  if FileExists(GLOBAL_FILES_MINES_CLIENT) then
+  begin
+    { GamePath := ExtractFilePath(GLOBAL_FILES_MINES_CLIENT);
+      GameClient := GLOBAL_FILES_MINES_CLIENT;
+      GameData := GamePath + 'Mines3_Data';
+
+      if DirectoryExists(GameData) then
+      begin
+      GameClient := GamePath + '\' + accountData + '.exe';
+      if CopyFile(PChar(GLOBAL_FILES_MINES_CLIENT), PChar(GameClient),
+      false) then
+      begin
+      GameTwinksData := GamePath + '\' + accountData + '_Data';
+      if CopyDir(PChar(GameData), PChar(GameTwinksData)) then
+      begin
+      // ShowMessage('123123');
+      ShellExecute(Handle, 'open', PChar(GameClient),
+      nil, nil, SW_SHOWMAXIMIZED);
+      end;
+
+      end;
+      end; }
+
+    ShellExecute(Handle, 'open', PChar(GLOBAL_FILES_MINES_CLIENT), nil,
+      nil, SW_SHOWMAXIMIZED);
+  end
+  else
+  begin
+    ShowMessage('Сначала выберите папку с клиентом');
+    SettingsClientPath;
+  end;
 end;
 
 procedure Tfrm.btn_quitClick(Sender: TObject);

@@ -4,7 +4,7 @@ object frm: Tfrm
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Account Switcher 2.0'
-  ClientHeight = 650
+  ClientHeight = 694
   ClientWidth = 384
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -187,11 +187,14 @@ object frm: Tfrm
   end
   object btn_launch: TButton
     Left = 0
-    Top = 484
+    Top = 479
     Width = 384
     Height = 49
+    Hint = 
+      #1047#1072#1087#1091#1089#1082#1072#1077#1090' '#1082#1083#1080#1077#1085#1090' '#1080#1075#1088#1099', '#1087#1088#1077#1076#1074#1072#1088#1080#1090#1077#1083#1100#1085#1086' '#1072#1074#1090#1086#1088#1080#1079#1086#1074#1072#1074' '#1074#1099#1073#1088#1072#1085#1085#1099#1081' '#1072#1082#1082#1072 +
+      #1091#1085#1090
     Align = alBottom
-    Caption = #1047#1040#1055#1059#1057#1058#1048#1058#1068' '#1048#1043#1056#1059
+    Caption = #1047#1040#1055#1059#1057#1058#1048#1058#1068' '#1040#1050#1050#1040#1059#1053#1058
     Enabled = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -199,16 +202,18 @@ object frm: Tfrm
     Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
     ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 2
     TabStop = False
     OnClick = btn_launchClick
-    ExplicitTop = 435
+    ExplicitTop = 522
   end
   object listbox_accountList: TListBox
     Left = 0
     Top = 98
     Width = 384
-    Height = 288
+    Height = 283
     TabStop = False
     Align = alClient
     Enabled = False
@@ -232,10 +237,11 @@ object frm: Tfrm
     ParentFont = False
     TabOrder = 3
     OnDblClick = listbox_accountListDblClick
+    ExplicitHeight = 288
   end
   object btn_removeAccount: TButton
     Left = 0
-    Top = 386
+    Top = 381
     Width = 384
     Height = 49
     Align = alBottom
@@ -250,10 +256,11 @@ object frm: Tfrm
     TabOrder = 4
     TabStop = False
     OnClick = btn_removeAccountClick
+    ExplicitTop = 386
   end
   object btn_settings: TButton
     Left = 0
-    Top = 533
+    Top = 577
     Width = 384
     Height = 49
     Align = alBottom
@@ -267,11 +274,11 @@ object frm: Tfrm
     TabOrder = 5
     TabStop = False
     OnClick = btn_settingsClick
-    ExplicitTop = 484
+    ExplicitTop = 533
   end
   object btn_quit: TButton
     Left = 0
-    Top = 582
+    Top = 626
     Width = 384
     Height = 49
     Align = alBottom
@@ -285,11 +292,11 @@ object frm: Tfrm
     TabOrder = 6
     TabStop = False
     OnClick = btn_quitClick
-    ExplicitTop = 533
+    ExplicitTop = 582
   end
   object stbar_main: TStatusBar
     Left = 0
-    Top = 631
+    Top = 675
     Width = 384
     Height = 19
     Panels = <
@@ -305,11 +312,11 @@ object frm: Tfrm
         Width = 50
       end>
     OnClick = stbar_mainClick
-    ExplicitTop = 582
+    ExplicitTop = 631
   end
   object btn_updateRegistry: TButton
     Left = 0
-    Top = 435
+    Top = 430
     Width = 384
     Height = 49
     Align = alBottom
@@ -324,7 +331,28 @@ object frm: Tfrm
     TabOrder = 8
     TabStop = False
     OnClick = btn_updateRegistryClick
-    ExplicitTop = 443
+    ExplicitTop = 435
+  end
+  object btn_launchClient: TButton
+    Left = 0
+    Top = 528
+    Width = 384
+    Height = 49
+    Hint = #1047#1072#1087#1091#1089#1082#1072#1077#1090' '#1095#1080#1089#1090#1086' '#1082#1083#1080#1077#1085#1090' '#1080#1075#1088#1099' '#1073#1077#1079' '#1072#1074#1090#1086#1088#1080#1079#1072#1094#1080#1080' '#1072#1082#1082#1072#1091#1085#1090#1072' '#1080#1079' '#1089#1087#1080#1089#1082#1072
+    Align = alBottom
+    Caption = #1047#1040#1055#1059#1057#1058#1048#1058#1068' '#1050#1051#1048#1045#1053#1058
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Segoe UI'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 9
+    TabStop = False
+    OnClick = btn_launchClientClick
+    ExplicitTop = 536
   end
   object tmr_focusListChecker: TTimer
     Interval = 100
