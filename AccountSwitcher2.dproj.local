@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899.12.30 00:00:00.000.881,D:\__PROGRAMMING__\DELPHI NEWBREATH\Project1.dproj=D:\__PROGRAMMING__\AccountSwitcher2.0\AccountSwitcher2.dproj</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.312,D:\__PROGRAMMING__\DELPHI NEWBREATH\Unit1.dfm=D:\__PROGRAMMING__\AccountSwitcher2.0\Main.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.312,D:\__PROGRAMMING__\AccountSwitcher2.0\Main.pas=D:\__PROGRAMMING__\DELPHI NEWBREATH\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.312,D:\__PROGRAMMING__\AccountSwitcher2.0\Main.dfm=D:\__PROGRAMMING__\DELPHI NEWBREATH\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.881,D:\__PROGRAMMING__\AccountSwitcher2.0\AccountSwitcher2.dproj=D:\__PROGRAMMING__\DELPHI NEWBREATH\Project1.dproj</Transaction>
     <Transaction>1899.12.30 00:00:00.000.368,=D:\__PROGRAMMING__\DELPHI NEWBREATH\Unit1.pas</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.312,D:\__PROGRAMMING__\DELPHI NEWBREATH\Unit1.pas=D:\__PROGRAMMING__\AccountSwitcher2.0\Main.pas</Transaction>
   </Transactions>
 </BorlandProject>
